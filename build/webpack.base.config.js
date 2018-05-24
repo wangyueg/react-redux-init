@@ -1,7 +1,10 @@
 const webpack = require('webpack');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const cwd = process.cwd();
 
+console.log(process.env.NODE_ENV)
 module.exports = {
 	mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
 	entry: {
@@ -9,7 +12,7 @@ module.exports = {
 	},
 	output: {
 		path: path.join(cwd, 'public'),
-		filename: 'scripts/[name].[hash].js'
+		filename: process.env.NODE_ENV === 'production' ? 'scripts/[name].[hash].js' : 'scripts/app.js'
 	},
 	resolve: {
 		extensions: ['.js', '.json']
@@ -39,5 +42,14 @@ module.exports = {
 		    }
 		]
 	},
-	devtool: process.env.NODE_ENV === 'production' ? '' : 'cheap-module-source-map'
+	plugins: [
+		new HtmlWebpackPlugin({
+			title: 'Development Dev',
+			template: 'index.template.html'
+		}),
+		new webpack.ProvidePlugin({
+    		'fetch': 'exports-loader?self.fetch!whatwg-fetch'
+    	})
+	],
+	devtool: process.env.NODE_ENV === 'production' ? 'source-map' : 'cheap-module-source-map'
 }
