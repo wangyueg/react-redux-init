@@ -1,5 +1,19 @@
-export let loginByAccount = () => {
+export let loginUser = (username, password) => {
 	return {
-		type: 'LOGIN_BY_ACCOUNT'
+		type: 'LOGIN_USER',		
+		playload: {
+			url: '/wms/login.do',
+			type: 'get',
+			param: {
+				userName: username,
+				password: password
+			}
+		}
+	}
+}
+
+export let updateLoginStatus = () => {
+	return {
+		type: 'UPDATE_LOGIN_STATUS'
 	}
 }

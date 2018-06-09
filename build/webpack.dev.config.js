@@ -13,14 +13,30 @@ let webpackDevConfig = merge(webpackBaseConfig, {
 	module: {
 		rules: [
 			{
-				test: /\.scss$/,
+				test: /\.(less|css)$/,
 				use: [
 					'style-loader',
 					'css-loader',
-					'sass-loader'
+					{
+						loader: 'less-loader',
+						options: {
+		                  modifyVars: { "@primary-color": "red" },
+		                }
+					}
 				]
 			}
 		]																			
+	},
+	optimization: {
+		splitChunks: {
+			cacheGroups: {
+		        commons: {
+		            test: /[\\/]node_modules[\\/]/,
+		            name: "vendors",
+		            chunks: "all"
+		        },
+		    }
+		}
 	},
 	plugins: [
 		new webpack.DefinePlugin({

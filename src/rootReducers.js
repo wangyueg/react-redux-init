@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import Login from './app/login/index.reducer';
-
-console.log(combineReducers)
+import Fetch from './middleware/fetch/index.reducer';
 
 export default combineReducers({
-	Login
+	Login,
+	Fetch
 });

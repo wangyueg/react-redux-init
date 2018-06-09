@@ -11,7 +11,6 @@ const config = require('../config/index');
 //默认port
 let port = process.env.PORT || config.development.port;
 
-console.log(config.development.autoOpenBrowser);
 //决定是否自动打开浏览器
 let autoOpenBrowser = config.development.autoOpenBrowser || false,
 	complier = webpack(webpackConfig),
@@ -36,7 +35,7 @@ let hotMiddleware = webpackHotMiddleware(complier,{
 complier.plugin('compilation', function (compilation) {
   compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
     hotMiddleware.publish({ action: 'reload' })
-    cb()
+    cb && cb()
   })
 })
 

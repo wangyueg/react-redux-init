@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const cwd = process.cwd();
 
-console.log(process.env.NODE_ENV)
 module.exports = {
 	mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
 	entry: {
@@ -26,7 +25,7 @@ module.exports = {
 					{
 						loader: 'babel-loader',
 						options: {
-							presets: ["env", "react"],
+							presets: ["env", "react", "stage-2"],
 							plugins: [require('babel-plugin-transform-object-rest-spread')]
 						}
 					}
@@ -37,14 +36,15 @@ module.exports = {
 		        loader: 'url-loader',
 		        query: {
 		          limit: 10000,
-		          name: '[name].[hash:16].[ext]'
+		          name: 'img/[name].[hash:16].[ext]'
 		        }
 		    }
 		]
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			title: 'Development Dev',
+			title: '会员中心',
+			inject: false,
 			template: 'index.template.html'
 		}),
 		new webpack.ProvidePlugin({
